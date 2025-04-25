@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Restaurant Data Entry Form</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; }
+    table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
+    table, th, td { border: 1px solid black; }
+    th, td { padding: 10px; text-align: left; }
+    input, select { padding: 8px; width: 100%; }
+    button { padding: 8px 16px; background-color: #4CAF50; color: white; border: none; cursor: pointer; }
+    button:hover { background-color: #45a049; }
+    .error { color: red; }
+  </style>
+</head>
+<body>
+
+  <h2>Restaurant Data Entry Form</h2>
+
+  <form id="restaurantForm" onsubmit="return submitForm()">
+    <table>
+      <tr>
+        <th>Field</th>
+        <th>Input</th>
+      </tr>
+      <tr>
+        <td><label for="restaurantName">Restaurant Name:</label></td>
+        <td><input type="text" id="restaurantName" name="restaurantName" /></td>
+      </tr>
+      <tr>
+        <td><label for="location">Location:</label></td>
+        <td><input type="text" id="location" name="location" /></td>
+      </tr>
+      <tr>
+        <td><label for="cuisine">Cuisine Type:</label></td>
+        <td>
+          <select id="cuisine" name="cuisine">
+            <option value="">Select Cuisine</option>
+            <option value="Italian">Italian</option>
+            <option value="Chinese">Chinese</option>
+            <option value="Indian">Indian</option>
+            <option value="Mexican">Mexican</option>
+          </select>
+        </td>
+      </tr>
+      <tr>
+        <td><label for="priceRange">Price Range:</label></td>
+        <td>
+          <select id="priceRange" name="priceRange">
+            <option value="">Select Price Range</option>
+            <option value="Low">Low</option>
+            <option value="Medium">Medium</option>
+            <option value="High">High</option>
+          </select>
+        </td>
+      </tr>
+      <tr>
+        <td><label for="contact">Contact Number:</label></td>
+        <td><input type="text" id="contact" name="contact" /></td>
+      </tr>
+    </table>
+    <button type="submit">Submit</button>
+  </form>
+
+  <h3>Form Submission Events</h3>
+  <div id="events"></div>
+
+  <script>
+    // Activity class for tracking form events
+    class Activity {
+      constructor() {
+        this.events = [];
+      }
+
+      logEvent(eventDescription) {
+        this.events.push(eventDescription);
+        this.displayEvents();
+      }
+
+      displayEvents() {
+        const eventContainer = document.getElementById("events");
+        eventContainer.innerHTML = "<ul>" + this.events.map(event => `<li>${event}</li>`).join('') + "</ul>";
+      }
+    }
+
+    // Create an instance of the Activity class
+    const activity = new Activity();
+
+    // Submit form validation
+    function submitForm() {
+      let valid = true;
+
+      // Get form field values
+      const restaurantName = document.getElementById("restaurantName").value.trim();
+      const location = document.getElementById("location").value.trim();
+      const cuisine = document.getElementById("cuisine").value;
+      const priceRange = document.getElementById("priceRange").value;
+      const contact = document.getElementById("contact").value.trim();
+
+      // Clear previous events
+      activity.logEvent("Form submitted");
+
+      // Validate restaurant name
+      if (!restaurantName) {
+        valid = false;
+        activity.logEvent("Restaurant Name is required.");
+      }
+
+      // Validate location
+      if (!location) {
+        valid = false;
+        activity.logEvent("Location is required.");
+      }
+
+      // Validate cuisine type
+      if (!cuisine) {
+        valid = false;
+        activity.logEvent("Cuisine type is required.");
+      }
+
+      // Validate price range
+      if (!priceRange) {
+        valid = false;
+        activity.logEvent("Price range is required.");
+      }
+
+      // Validate contact number
+      const phonePattern = /^[0-9]{10}$/;
+      if (!phonePattern.test(contact)) {
+        valid = false;
+        activity.logEvent("Please enter a valid 10-digit contact number.");
+      }
+
+      if (valid) {
+        activity.logEvent("Form successfully validated and submitted.");
+      } else {
+        activity.logEvent("Form validation failed.");
+      }
+
+      // Prevent form submission for demo purposes
+      return false;
+    }
+  </script>
+
+</body>
+</html>

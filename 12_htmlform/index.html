@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Contact Us</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <div class="container">
+    <h2>Contact Us</h2>
+    <form>
+      <!-- Full Name: only alphabets and spaces -->
+      <label for="name">Full Name:</label>
+      <input type="text" id="name" name="name" placeholder="Enter your name" required 
+             pattern="^[A-Za-z\s]+$" title="Only alphabets and spaces allowed">
+
+      <!-- Email: default validation -->
+      <label for="email">Email Address:</label>
+      <input type="email" id="email" name="email" placeholder="Enter your email" required>
+
+      <!-- Message: only alphabets and spaces -->
+      <label for="message">Message:</label>
+      <textarea id="message" name="message" rows="5" placeholder="Type your message here..." required 
+                pattern="^[A-Za-z\s]+$" title="Only alphabets and spaces allowed"></textarea>
+
+      <button type="submit">Send Message</button>
+    </form>
+  </div>
+
+</body>
+</html>

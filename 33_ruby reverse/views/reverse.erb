@@ -1,0 +1,117 @@
+<?php
+// Step 1: Handle form submission and set cookie
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    if (isset($_POST["username"])) {
+        $username = $_POST["username"];
+        // Set the cookie for 7 days
+        setcookie("username", $username, time() + (86400 * 7), "/");
+        // Redirect to apply cookie
+        header("Location: " . $_SERVER["PHP_SELF"]);
+        exit();
+    }
+
+    // If "Clear Cookie" is clicked, delete the cookie
+    if (isset($_POST["clear"])) {
+        setcookie("username", "", time() - 3600, "/"); // Expire the cookie
+        // Redirect to reload the page and remove the cookie
+        header("Location: " . $_SERVER["PHP_SELF"]);
+        exit();
+    }
+}
+?>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Cookie Example</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f4f4;
+            padding: 40px;
+            text-align: center;
+        }
+
+        h2 {
+            color: #333;
+        }
+
+        form {
+            background: #fff;
+            padding: 20px;
+            margin: 20px auto;
+            display: inline-block;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+
+        label {
+            font-size: 16px;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        input[type="text"] {
+            padding: 10px;
+            width: 250px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin-bottom: 15px;
+        }
+
+        input[type="submit"] {
+            background-color: #007BFF;
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+
+        .clear-btn {
+            background-color: #FF5733; /* Red button to clear the cookie */
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .clear-btn:hover {
+            background-color: #d04f29;
+        }
+    </style>
+</head>
+<body>
+
+<?php
+// Step 2: Show welcome message if cookie exists
+if (isset($_COOKIE["username"])) {
+    echo "<h2>Welcome back, " . htmlspecialchars($_COOKIE["username"]) . "!</h2>";
+    // Show the "Clear Cookie" button
+    echo '
+    <form method="post" action="">
+        <input type="hidden" name="clear" value="1">
+        <input type="submit" class="clear-btn" value="Clear Cookie">
+    </form>
+    ';
+}
+?>
+
+<!-- Step 3: Form to accept username, always visible -->
+<form method="post" action="">
+    <label for="username">Enter your name:</label>
+    <input type="text" name="username" required>
+    <input type="submit" value="Save Name">
+</form>
+
+</body>
+</html>
+

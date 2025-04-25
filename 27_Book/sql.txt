@@ -1,0 +1,20 @@
+CREATE DATABASE book_catalogue;
+
+USE book_catalogue;
+
+CREATE TABLE users (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100),
+    email VARCHAR(100) UNIQUE,
+    password VARCHAR(255)
+);
+
+
+
+
+
+INSERT INTO books (title, author, genre, year) VALUES
+('1984', 'George Orwell', 'Dystopian', 1949),
+('To Kill a Mockingbird', 'Harper Lee', 'Fiction', 1960),
+('The Great Gatsby', 'F. Scott Fitzgerald', 'Classic', 1925);
+

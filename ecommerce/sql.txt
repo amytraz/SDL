@@ -1,0 +1,33 @@
+-- Create the database if it doesn't exist
+CREATE DATABASE IF NOT EXISTS ecommerce;
+
+-- Use the database
+USE ecommerce;
+
+-- Create products table if it doesn't exist
+CREATE TABLE IF NOT EXISTS products (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255),
+    description TEXT,
+    price DECIMAL(10,2)
+);
+
+-- Create cart table if it doesn't exist
+CREATE TABLE IF NOT EXISTS cart (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    product_id INT,
+    quantity INT,
+    FOREIGN KEY (product_id) REFERENCES products(id)
+);
+
+-- Insert sample products only if products table is empty
+INSERT INTO products (name, description, price)
+SELECT * FROM (SELECT 'T-Shirt', 'Comfortable cotton t-shirt', 19
+               UNION ALL
+               SELECT 'Sneakers', 'Sporty running shoes', 49
+               UNION ALL
+               SELECT 'Watch', 'Stylish wrist watch', 89) AS tmp
+WHERE NOT EXISTS (
+    SELECT 1 FROM products
+);
+

@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Facebook Registration Form</title>
+  <style>
+    body {
+      background-color: #f0f2f5;
+      font-family: Arial, sans-serif;
+    }
+
+    .form-container {
+      max-width: 300px;
+      margin: 40px auto;
+      padding: 50px;
+      background-color: #fff;
+      border-radius: 10px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.1);
+    }
+
+    h2 {
+      text-align: center;
+      color: #1877f2;
+    }
+
+    .form-group {
+      margin-bottom: 15px;
+    }
+
+    label {
+      font-weight: bold;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    .toggle-pass {
+      margin-top: 5px;
+      font-size: 13px;
+      cursor: pointer;
+      color: #007bff;
+    }
+
+    .btn {
+      background-color: #1877f2;
+      color: white;
+      border: none;
+      padding: 12px;
+      width: 100%;
+      font-size: 16px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .btn:hover {
+      background-color: #145dbf;
+    }
+
+    .error {
+      color: red;
+      font-size: 12px;
+    }
+
+    .success {
+      color: green;
+      text-align: center;
+      margin-top: 10px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+
+<div class="form-container">
+  <h2>Create Facebook Account</h2>
+  <form id="fbForm" onsubmit="return validateForm()">
+    <div class="form-group">
+      <label>Full Name</label>
+      <input type="text" id="name" onblur="validateName()" />
+      <div class="error" id="nameErr"></div>
+    </div>
+
+    <div class="form-group">
+      <label>Email</label>
+      <input type="email" id="email" onblur="validateEmail()" />
+      <div class="error" id="emailErr"></div>
+    </div>
+
+    <div class="form-group">
+      <label>Password</label>
+      <input type="password" id="password" onblur="validatePassword()" />
+      <span class="toggle-pass" onclick="togglePassword()">Show Password</span>
+      <div class="error" id="passwordErr"></div>
+    </div>
+
+    <div class="form-group">
+      <label>Gender</label>
+      <select id="gender" onblur="validateGender()">
+        <option value="">-- Select Gender --</option>
+        <option>Male</option>
+        <option>Female</option>
+        <option>Other</option>
+      </select>
+      <div class="error" id="genderErr"></div>
+    </div>
+
+    <div class="form-group">
+      <label>Birthday</label>
+      <input type="date" id="dob" onblur="validateDob()" />
+      <div class="error" id="dobErr"></div>
+    </div>
+
+    <button class="btn" type="submit">Sign Up</button>
+    <div class="success" id="successMsg"></div>
+  </form>
+</div>
+
+<script>
+  function togglePassword() {
+    const passInput = document.getElementById("password");
+    const toggle = document.querySelector(".toggle-pass");
+    if (passInput.type === "password") {
+      passInput.type = "text";
+      toggle.innerText = "Hide Password";
+    } else {
+      passInput.type = "password";
+      toggle.innerText = "Show Password";
+    }
+  }
+
+  function validateName() {
+    const name = document.getElementById("name").value.trim();
+    const nameErr = document.getElementById("nameErr");
+    if (name === "") {
+      nameErr.innerText = "Name is required";
+      return false;
+    } else if (/\d/.test(name)) {
+      nameErr.innerText = "Name cannot contain numbers";
+      return false;
+    } else if (name.length < 3) {
+      nameErr.innerText = "Name is not valid";
+      return false;
+    } else {
+      nameErr.innerText = "";
+      return true;
+    }
+  }
+
+  function validateEmail() {
+    const email = document.getElementById("email").value.trim();
+    const emailErr = document.getElementById("emailErr");
+    if (email === "" || !email.includes("@")) {
+      emailErr.innerText = "Enter a valid email";
+      return false;
+    } else {
+      emailErr.innerText = "";
+      return true;
+    }
+  }
+
+  function validatePassword() {
+    const password = document.getElementById("password").value;
+    const passwordErr = document.getElementById("passwordErr");
+    if (password.length < 6) {
+      passwordErr.innerText = "Password must be at least 6 characters";
+      return false;
+    } else {
+      passwordErr.innerText = "";
+      return true;
+    }
+  }
+
+  function validateGender() {
+    const gender = document.getElementById("gender").value;
+    const genderErr = document.getElementById("genderErr");
+    if (gender === "") {
+      genderErr.innerText = "Select gender";
+      return false;
+    } else {
+      genderErr.innerText = "";
+      return true;
+    }
+  }
+
+  function validateDob() {
+    const dob = document.getElementById("dob").value;
+    const dobErr = document.getElementById("dobErr");
+    if (dob === "") {
+      dobErr.innerText = "Select date of birth";
+      return false;
+    } else {
+      const selectedDate = new Date(dob);
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+      if (selectedDate > today) {
+        dobErr.innerText = "DOB cannot be in the future";
+        return false;
+      } else {
+        dobErr.innerText = "";
+        return true;
+      }
+    }
+  }
+
+  function validateForm() {
+    document.querySelectorAll('.error').forEach(el => el.innerText = '');
+    document.getElementById("successMsg").innerText = "";
+
+    const validName = validateName();
+    const validEmail = validateEmail();
+    const validPassword = validatePassword();
+    const validGender = validateGender();
+    const validDob = validateDob();
+
+    const isFormValid = validName && validEmail && validPassword && validGender && validDob;
+
+    if (isFormValid) {
+      const userData = {
+        name: document.getElementById("name").value.trim(),
+        email: document.getElementById("email").value.trim(),
+        password: document.getElementById("password").value,
+        gender: document.getElementById("gender").value,
+        dob: document.getElementById("dob").value,
+      };
+      console.log("User Registered Successfully:", userData);
+      document.getElementById("successMsg").innerText = "Registration Successful!";
+    }
+
+    return false;
+  }
+</script>
+
+</body>
+</html>
+

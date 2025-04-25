@@ -1,0 +1,15 @@
+CREATE DATABASE grocery_store;
+USE grocery_store;
+
+CREATE TABLE products (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100),
+    price DECIMAL(10, 2),
+    image VARCHAR(255)
+);
+
+INSERT INTO products (name, price, image) VALUES
+('Apples', 2.50, 'apple.jpg'),
+('Bananas', 1.20, 'banana.jpg'),
+('Carrots', 0.90, 'carrot.jpg'),
+('Milk', 1.50, 'milk.jpg');

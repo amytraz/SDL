@@ -1,0 +1,11 @@
+CREATE DATABASE IF NOT EXISTS email_verify_db;
+USE email_verify_db;
+
+CREATE TABLE users (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    email VARCHAR(100) NOT NULL,
+    password VARCHAR(255) NOT NULL,
+    token VARCHAR(100) NOT NULL,
+    is_verified TINYINT(1) DEFAULT 0
+);
+

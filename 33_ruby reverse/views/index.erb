@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Reverse Full Name</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f9f9f9;
+      text-align: center;
+      padding-top: 100px;
+    }
+    form {
+      background-color: white;
+      padding: 30px;
+      border-radius: 10px;
+      display: inline-block;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    input[type="text"] {
+      margin: 10px;
+      padding: 10px;
+      width: 200px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    button {
+      padding: 10px 20px;
+      background-color: #28a745;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #218838;
+    }
+  </style>
+</head>
+<body>
+  <h1>Enter Your Name</h1>
+  <form action="/reverse" method="post">
+    <input type="text" name="first_name" placeholder="First Name" required><br>
+    <input type="text" name="last_name" placeholder="Last Name" required><br>
+    <button type="submit">Reverse</button>
+  </form>
+</body>
+</html>
+
